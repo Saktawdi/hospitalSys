@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.cnwdi.Sakta_hospitalSys.mapper.RequestsMapper">
+    <update id="updateRequestsResult" parameterType="Requests">
+        UPDATE requests SET result=#{new_result} WHERE id =#{request_id}
+    </update>
+    <select id="listRequestsByStu" resultType="Requests">
+        select *from requests where student_num=#{student_num}
+    </select>
+    <select id="listAllRequests" resultType="Requests">
+        select * from requests
+    </select>
+    <select id="searchRequestsByResult" resultType="Requests">
+        select * from requests where result=#{result}
+    </select>
+    <insert id="saveRequest" parameterType="Requests" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert  into requests(student_num,result,hospital_name,prove_img_url,bill_img_url,create_time)
+        values (#{studentNum,jdbcType=VARCHAR},#{result,jdbcType=INTEGER},#{hospitalName,jdbcType=VARCHAR},
+                #{proveImgUrl,jdbcType=VARCHAR},#{billImgUrl,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <resultMap id="StudentsRequestResultMap" type="Users">
+        <id column="num" jdbcType="VARCHAR" property="num"/>
+
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="affiliation" jdbcType="VARCHAR" property="affiliation"/>
+        <result column="id_num" jdbcType="VARCHAR" property="idNum"/>
+        <result column="role" jdbcType="INTEGER" property="role"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+        <collection property="requests" ofType="Requests">
+            <id column="request_id" jdbcType="INTEGER" property="id"/>
+            <result column="request_student_num" jdbcType="VARCHAR" property="studentNum"/>
+            <result column="result" jdbcType="INTEGER" property="result"/>
+            <result column="hospital_name" jdbcType="VARCHAR" property="hospitalName"/>
+            <result column="prove_img_url" jdbcType="VARCHAR" property="proveImgUrl"/>
+            <result column="bill_img_url" jdbcType="VARCHAR" property="billImgUrl"/>
+
+            <result column="request_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+        </collection>
+    </resultMap>
+
+    <select id="Wor_findRequestedByNum" resultMap="StudentsRequestResultMap">
+        SELECT s.id,s.num,s.`name`,s.pwd,s.sex,s.affiliation,s.id_num,s.create_time,
+               r.id AS request_id,r.student_num AS request_student_num,r.result,r.hospital_name,r.prove_img_url,r.bill_img_url,r.create_time AS request_create_time
+        FROM users s LEFT JOIN requests r ON
+            s.num=r.student_num WHERE s.num=#{student_num};
+    </select>
+</mapper>

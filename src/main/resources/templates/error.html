@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>错误页面</title>
+</head>
+<body>
+这里是自定义异常页面,错误信息如下：<br>
+<span>信息：</span><br><p th:text="${msg}"></p><br>
+<span>错误码:</span><br><p th:text="${code}"></p><br>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.cnwdi.Sakta_hospitalSys.mapper.UserMapper">
+    <select id="listStudents" resultType="Users">
+        select * from users where role="1"
+    </select>
+    <select id="findByNum" resultType="Users">
+        select * from users where num=#{num}
+    </select>
+    <select id="findByNumAndpwd" resultType="Users">
+        select * from users where num=#{num} and pwd=#{pwd}
+    </select>
+    <insert id="save" parameterType="Users" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into users (num,name,pwd,sex,affiliation,id_num,role,create_time)
+        values (#{num,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{pwd,jdbcType=VARCHAR},
+                #{sex,jdbcType=INTEGER},#{affiliation,jdbcType=VARCHAR},#{idNum,jdbcType=VARCHAR},#{role,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+</mapper>

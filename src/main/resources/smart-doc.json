@@ -1,0 +1,28 @@
+{
+  "allInOne": true,
+  "outPath": "src/main/resources/static/",
+  "createDebugPage": true,
+  "packageFilters": "top.cnwdi.Sakta_hospitalSys.controller.*",
+
+  "requestFieldToUnderline":true,
+  "allInOneDocFileName": "index.html",
+  "revisionLogs": [
+    {
+      "version": "1.0",
+      "revisionTime": "2022年5月19日",
+      "status": "update",
+      "author": "sakta_wdi",
+      "remarks": "新增smart-doc"
+    }
+  ],
+  "requestHeaders": [
+    {
+      "name": "token",
+      "type": "string",
+      "desc": "登录后返回的 - token",
+      "required": false,
+      "since": "-",
+      "excludePathPatterns": "/api/v1/pri/login,/api/v1/pri/register"
+    }
+  ]
+}
